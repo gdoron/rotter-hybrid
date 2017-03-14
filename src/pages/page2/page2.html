@@ -1,0 +1,20 @@
+﻿<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>בחר פורום</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let forum of forums" (click)="itemTapped($event, forum)">
+      <!--<ion-icon [name]="item.icon" item-left></ion-icon>-->
+      {{forum.alias}}
+      <!--<div class="item-note" item-right>
+        {{forum.note}}
+      </div>-->
+    </button>
+  </ion-list>
+</ion-content>

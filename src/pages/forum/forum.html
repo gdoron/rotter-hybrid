@@ -1,0 +1,23 @@
+﻿<ion-header>
+  <ion-navbar>
+    <ion-title>{{alias}}</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="refreshForum($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown"
+                           pullingText="Pull to refresh"
+                           refreshingSpinner="circles"
+                           refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-searchbar (ionInput)="searchThreads($event)"></ion-searchbar>
+  <ion-list>
+    <button ion-item *ngFor="let thread of threads" (click)="threadSelected($event, thread)" style="direction:rtl">      
+      <span [innerHTML]="thread.title"></span>
+      <div class="item-note" item-right>
+        {{thread.author}}
+      </div>
+    </button>
+  </ion-list>
+</ion-content>

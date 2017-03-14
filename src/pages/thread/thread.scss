@@ -1,0 +1,52 @@
+﻿@import '../../app/app.scss';
+
+page-thread {
+  .comment {
+    direction: rtl;
+    margin-top: 15px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.22);
+    background-color: #f1f1f1;
+
+    &:nth-child(n+1) {
+      margin-top: 25px;
+    }
+
+    .top {
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+
+      .author {
+      }
+
+      .date {
+        color: #808080;
+      }
+    }
+
+    header {
+      color: #000;
+      font-weight: bold;
+      padding: 10px 0;
+      @include word-wrap;
+    }
+
+    .body {
+      @include word-wrap;
+      color: #000;
+
+      img:not(.loaded) {
+        background: url('/assets/image-placeholder.png') no-repeat;
+        background-size: contain;
+        min-height: 172px;
+      }
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 5px;
+    }
+  }
+}

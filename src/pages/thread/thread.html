@@ -1,0 +1,26 @@
+﻿<ion-header>
+  <ion-navbar>
+    <ion-title><marquee>{{title}}</marquee></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="refreshComments($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown"
+                           pullingText="Pull to refresh"
+                           refreshingSpinner="circles"
+                           refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+    <section *ngFor="let comment of comments" class="comment" padding id="comment{{comment.index}}">
+      <div class="top">
+        <a class="author" href="#">{{comment.author}}</a>
+        <div class="date">{{moment(comment.timestamp, 'X').calendar()}}</div>
+      </div>
+      <header [innerHTML]="(comment.index > 0 ?comment.index + '. ' : '')+comment.title"></header>
+      <div class="body" [innerHTML]="sanitizer.bypassSecurityTrustHtml(comment.html)"></div>
+      <footer>
+        <a href="#" class="reply" (click)="reply(comment)">הגב</a>
+        <a *ngIf="comment.index > 0" href="#comment{{comment.parent}}" class="reply-to">בתגובה להודעה #{{comment.parent}}</a>
+      </footer>
+    </section>
+</ion-content>
