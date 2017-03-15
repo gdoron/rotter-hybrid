@@ -39,13 +39,13 @@ export class NewsService {
     }
 
     getThreads(forum: string): Promise<Thread[]> {
-        return this.http.get('http://rotter.net/gilad/index.php?forum=' + forum).toPromise() 
+        return this.http.get('http://rotter.net/gilad/?forum=' + forum).toPromise() 
             .then(response => response.json() as Thread[])
             .catch(this.handleError);
     }
 
     getComments(forum: string, om : string): Promise<Comment[]> {
-        return this.http.get(`http://rotter.net/gilad/index.php?forum=${forum}&om=${om}`).toPromise()
+        return this.http.get(`http://rotter.net/gilad/?forum=${forum}&om=${om}`).toPromise()
             .then(response => {
                 var comments = response.json().entries as Comment[];
                 for (var i = 0; i < comments.length; i++) {
