@@ -1,17 +1,20 @@
 ﻿<ion-header>
   <ion-navbar>
-    <ion-title><marquee>{{title}}</marquee></ion-title>
+    <ion-title>
+        <button ion-button icon-only clear (click)="presentThreadPopover($event)">
+          <ion-icon name="more"></ion-icon>
+        </button>
+        <marquee style="vertical-align:-webkit-baseline-middle">{{title}}</marquee>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <ion-refresher (ionRefresh)="refreshComments($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown"
-                           pullingText="Pull to refresh"
-                           refreshingSpinner="circles"
-                           refreshingText="Refreshing...">
+    <ion-refresher-content pullingText="משוך בשביל לרענן" refreshingText="טוען...">
     </ion-refresher-content>
   </ion-refresher>
-    <section *ngFor="let comment of comments" class="comment" padding id="comment{{comment.index}}">
+  <div [virtualScroll]="comments">
+    <section *virtualItem="let comment" class="comment" padding id="comment{{comment.index}}">
       <div class="top">
         <a class="author" href="#">{{comment.author}}</a>
         <div class="date">{{moment(comment.timestamp, 'X').calendar()}}</div>
@@ -23,4 +26,5 @@
         <a *ngIf="comment.index > 0" href="#comment{{comment.parent}}" class="reply-to">בתגובה להודעה #{{comment.parent}}</a>
       </footer>
     </section>
+  </div>
 </ion-content>

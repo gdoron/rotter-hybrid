@@ -22,7 +22,8 @@ export class Page2 {
         this.forums = [];
     }
 
-    ngOnInit() {
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad Page2');
         this.newsService.getForums().then(forums => {
             this.forums = forums;
         });

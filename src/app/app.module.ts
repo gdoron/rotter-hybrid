@@ -8,6 +8,7 @@ import { Page2 } from '../pages/page2/page2';
 import { ThreadPage } from '../pages/thread/thread';
 import { ForumPage } from '../pages/forum/forum';
 import { CommentPage } from '../pages/comment/comment';
+import { ThreadPopoverPage } from '../pages/thread-popover/thread-popover';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { CommentPage } from '../pages/comment/comment';
         Page2,
         ThreadPage,
         ForumPage,
-        CommentPage
+        CommentPage,
+        ThreadPopoverPage
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -27,7 +29,8 @@ import { CommentPage } from '../pages/comment/comment';
         Page2,
         ThreadPage,
         ForumPage,
-        CommentPage
+        CommentPage,
+        ThreadPopoverPage
     ],
     providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
 })

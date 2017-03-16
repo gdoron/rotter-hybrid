@@ -31,8 +31,36 @@
   white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
 }
 
+.word-wrap {
+  @include word-wrap;
+}
+
 .responsive-img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+ion-header {
+  direction: rtl;
+
+  .toolbar-title {
+    text-align: right;
+  }
+
+  .back-button-icon-ios:before {
+    content: "\f3d1";
+  }
+
+  .back-button-icon-md:before {
+    content: "\f287";
+  }
+
+  ion-title {
+    direction: ltr
+  }
+
+  .toolbar-ios ion-title {
+    padding: 0 90px 1px 20px;
+  }
 }

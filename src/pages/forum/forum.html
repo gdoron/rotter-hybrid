@@ -5,19 +5,27 @@
 </ion-header>
 <ion-content>
   <ion-refresher (ionRefresh)="refreshForum($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown"
-                           pullingText="Pull to refresh"
-                           refreshingSpinner="circles"
-                           refreshingText="Refreshing...">
+    <ion-refresher-content pullingText="משוך בשביל לרענן" refreshingText="טוען...">
     </ion-refresher-content>
   </ion-refresher>
   <ion-searchbar (ionInput)="searchThreads($event)"></ion-searchbar>
-  <ion-list>
-    <button ion-item *ngFor="let thread of threads" (click)="threadSelected($event, thread)" style="direction:rtl">      
-      <span [innerHTML]="thread.title"></span>
-      <div class="item-note" item-right>
-        {{thread.author}}
+  <ion-list [virtualScroll]="threads">
+    <button detail-none ion-item *virtualItem="let thread" (click)="threadSelected($event, thread)" style="direction:rtl">
+      <div>
+        <div class="top">
+          <span class="author" href="#">{{thread.author}}</span>
+          <span class="date">{{moment(thread.timestamp, 'X').calendar()}}</span>
+        </div>
+        <div class="title word-wrap" [innerHTML]="thread.title"></div>
+        <div class="bottom">
+          <span class="last-author" href="#">מגיב אחרון: {{thread.lastAuthor}}</span>
+          <span class="comments">תגובות: {{thread.comments}}</span>
+          <span class="views">צפיות: {{thread.viewed}}</span>
+        </div>
       </div>
     </button>
   </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="light" (click)="newThread()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
 </ion-content>

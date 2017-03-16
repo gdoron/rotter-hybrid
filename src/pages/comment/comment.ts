@@ -13,6 +13,7 @@ export class CommentPage {
     replyToBody: string;
     replyToAuthor: string;
     forumName: string;
+    forumAlias: string;
     om: string;
     comment: FormGroup;
 
@@ -22,9 +23,10 @@ export class CommentPage {
         this.replyToBody = navParams.get('replyToBody');
         this.replyToAuthor = navParams.get('replyToAuthor');
         this.forumName = navParams.get('forumName');
+        this.forumAlias = navParams.get('forumAlias');
         this.om = navParams.get('om');
 
-        this.title = this.replyToIndex ? `הגב ל${this.replyToIndex} (${this.replyToAuthor})` : "אשכול חדש ב " + this.forumName;
+        this.title = this.replyToIndex ? `הגב ל${this.replyToIndex} (${this.replyToAuthor})` : "אשכול חדש ב " + this.forumAlias;
 
         this.comment = this.formBuilder.group({
             subject: ['', Validators.required],

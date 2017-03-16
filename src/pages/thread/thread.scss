@@ -3,11 +3,11 @@
 page-thread {
   .comment {
     direction: rtl;
-    margin-top: 15px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.22);
     background-color: #f1f1f1;
+    width: 100%;
 
-    &:nth-child(n+1) {
+    &:nth-child(n+2) {
       margin-top: 25px;
     }
 
