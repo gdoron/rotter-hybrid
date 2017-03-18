@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\typings"
   ],
-  "SelectedNode": "\\typings",
   "PreviewInSolutionExplorer": false
 }

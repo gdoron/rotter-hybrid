@@ -36,11 +36,11 @@ page-thread {
       @include word-wrap;
       color: #000;
 
-      img:not(.loaded) {
+      /*img:not(.loaded) {
         background: url('/assets/image-placeholder.png') no-repeat;
         background-size: contain;
         min-height: 172px;
-      }
+      }*/
     }
 
     footer {
