@@ -13,8 +13,10 @@
     <ion-refresher-content pullingText="משוך בשביל לרענן" refreshingText="טוען...">
     </ion-refresher-content>
   </ion-refresher>
-  <div [virtualScroll]="comments">
-    <section *virtualItem="let comment" class="comment" padding id="comment{{comment.index}}">
+  <!--<div [virtualScroll]="comments">
+    <section *virtualItem="let comment" class="comment" padding id="comment{{comment.index}}">-->
+  <div>
+    <section *ngFor="let comment of comments" class="comment" padding id="comment{{comment.index}}">
       <div class="top">
         <a class="author" href="#">{{comment.author}}</a>
         <div class="date">{{moment(comment.timestamp, 'X').calendar()}}</div>

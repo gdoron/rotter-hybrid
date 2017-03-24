@@ -9,7 +9,7 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-searchbar (ionInput)="searchThreads($event)"></ion-searchbar>
-  <ion-list [virtualScroll]="threads">
+  <ion-list [virtualScroll]="threads" [approxItemHeight]="'73px'">
     <button detail-none ion-item *virtualItem="let thread" (click)="threadSelected($event, thread)" style="direction:rtl">
       <div>
         <div class="top">
