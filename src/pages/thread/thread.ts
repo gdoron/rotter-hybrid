@@ -1,8 +1,10 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
 
-import { NavController, NavParams, LoadingController, Loading, PopoverController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
+import {
+    NavController, NavParams, LoadingController, Loading, PopoverController, Popover, Refresher, ToastController, Content
+} from 'ionic-angular';
+import { InAppBrowser } from 'ionic-native';
 
 import { CommentPage } from '../comment/comment';
 import { ThreadPopoverPage } from '../thread-popover/thread-popover';
@@ -18,6 +20,7 @@ import $ from 'jquery';
     templateUrl: 'thread.html',
 })
 export class ThreadPage {
+    @ViewChild(Content) content: Content;
 
     title: string;
     forumName: string;
@@ -28,6 +31,7 @@ export class ThreadPage {
     wrapImageRegex: RegExp;
     loader: Loading;
     showLoading: boolean = false;
+    popover: Popover;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController,
         private newsService: NewsService, private sanitizer: DomSanitizer, private loadingCtrl: LoadingController,
@@ -49,6 +53,11 @@ export class ThreadPage {
             this.loader && this.loader.dismiss().catch(() => console.error('loader was not dismissed'));
             this.showLoading = false;
         });
+
+        //$('page-thread').on('click', 'a', function (e: Event) {
+        //    console.log('prevented');
+        //    e.preventDefault();
+        //});
     }
 
     ionViewDidEnter() {
@@ -61,10 +70,14 @@ export class ThreadPage {
         }
     }
 
-    refreshComments(refresher) {
+    refreshComments(refresher?: Refresher) {
         this.newsService.getComments(this.forumName, this.om).then(comments => {
             this.comments = comments;
-            refresher.complete();
+            if (refresher)
+                refresher.complete();
+            else if (this.popover) {
+                this.goToComment(0);
+            }
         });
     }
 
@@ -79,11 +92,33 @@ export class ThreadPage {
             forumAlias: this.forumAlias
         });
     }
+    goToComment(index: number) {
+        if (this.popover) {
+            this.popover.dismiss();
+        }
+        let element = document.getElementById('comment' + index);
+        this.content.scrollTo(0, element.offsetTop, 500);
+    }
+
+    openLink(element: HTMLElement) {
+        console.log('Element');
+        if (element.tagName == 'A') {
+            console.log('Anchor');
+            //let browser = new InAppBrowser((element as HTMLAnchorElement).href, '_system');
+            let browser = new InAppBrowser((element as HTMLAnchorElement).href, '_blank', 'location=no,toolbar=no,closebuttoncaption=סגור,zoom=no');
+        }
+        return false;
+    }
 
     presentThreadPopover(event) {
         console.log('open popover');
-        let popover = this.popoverCtrl.create(ThreadPopoverPage);
+        this.popover = this.popoverCtrl.create(ThreadPopoverPage, {
+            commentsCount: this.comments.length,
+            url: `http://rotter.net/forum/${this.forumName}/${this.om}.shtml`,
+            title: this.title,
+            threadPage: this
+        });
 
-        popover.present({ ev: event });
+        this.popover.present({ ev: event });
     }
 }

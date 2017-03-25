@@ -22,7 +22,7 @@
         <div class="date">{{moment(comment.timestamp, 'X').calendar()}}</div>
       </div>
       <header [innerHTML]="(comment.index > 0 ?comment.index + '. ' : '')+comment.title"></header>
-      <div class="body" [innerHTML]="sanitizer.bypassSecurityTrustHtml(comment.html)"></div>
+      <div class="body" [innerHTML]="sanitizer.bypassSecurityTrustHtml(comment.html)" (click)="openLink($event.target)"></div>
       <footer>
         <a href="#" class="reply" (click)="reply(comment)">הגב</a>
         <a *ngIf="comment.index > 0" href="#comment{{comment.parent}}" class="reply-to">בתגובה להודעה #{{comment.parent}}</a>
