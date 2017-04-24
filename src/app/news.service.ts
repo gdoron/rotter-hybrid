@@ -11,6 +11,8 @@ import { Comment } from './comment';
 export class NewsService {
     wrapImageRegex = /(https?:\/\/.+?\.(?:png|gif|jpeg|jpg))/gim;
     wrapUrlRegex = /(?:^|\s|(?:\<br\s*\/?\>))((https?:\/\/)[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/[^\s\<]+)?)/gim;
+    embedFacebookRegex = /(https?:\/\/.+?)\.fbpost/gim;
+
     constructor(/*private toastCtrl: ToastController, */private http: Http) { }
 
     handleError() {
@@ -40,6 +42,7 @@ export class NewsService {
 
     getThreads(forum: string): Promise<Thread[]> {
         return this.http.get('http://rotter.net/gilad/index.php?forum=' + forum).toPromise()
+            //.then(response => response.json().slice(0, 100) as Thread[]) 
             .then(response => response.json().slice(0, 100) as Thread[])
             .catch(this.handleError);
     }
@@ -50,6 +53,7 @@ export class NewsService {
                 var comments = response.json().entries as Comment[];
                 for (var i = 0; i < comments.length; i++) {
                     comments[i].html = comments[i].html.replace(this.wrapImageRegex, `<img src="$1" class="responsive-img" />`);
+                    comments[i].html = comments[i].html.replace(this.embedFacebookRegex, `<div class="fb-post" data-href="$1" data-width="500"></div>`);
                     comments[i].html = comments[i].html.replace(this.wrapUrlRegex, '<a rel="nofollow" href="$1" target="_Blank">$1</a>');
                 }
 

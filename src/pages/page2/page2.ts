@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ForumPage } from '../forum/forum';
 import { NewsService } from '../../app/news.service'
 import { Forum } from '../../app/forum';
+import { AdMobPro } from '../../providers/admobpro';
 
 @Component({
     selector: 'page-page2',
@@ -15,7 +16,7 @@ export class Page2 {
     forumNames: string[];
     forums: Forum[];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private newsService: NewsService) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private newsService: NewsService, private adMobPro: AdMobPro) {
         this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
             'american-football', 'boat', 'bluetooth', 'build'];
         this.forumNames = ['Scoops', 'Politics', 'Coffee', 'Something else'];
@@ -27,6 +28,11 @@ export class Page2 {
         this.newsService.getForums().then(forums => {
             this.forums = forums;
         });
+
+        setTimeout(() => {
+            console.log('showBanner');
+            this.adMobPro.showBanner();
+        }, 30);
     }
 
     itemTapped(event, forum: Forum) {

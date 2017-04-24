@@ -9,8 +9,9 @@
     </ion-refresher-content>
   </ion-refresher>
   <ion-searchbar (ionInput)="searchThreads($event)"></ion-searchbar>
-  <ion-list [virtualScroll]="threads" [approxItemHeight]="'73px'">
-    <button detail-none ion-item *virtualItem="let thread" (click)="threadSelected($event, thread)" style="direction:rtl">
+  <!--<ion-list [virtualScroll]="threads" [approxItemHeight]="'73px'">-->
+  <ion-list>
+    <button detail-none ion-item *ngFor="let thread of threads" (click)="threadSelected($event, thread)" style="direction:rtl">
       <div>
         <div class="top">
           <span class="author" href="#">{{thread.author}}</span>
@@ -25,7 +26,10 @@
       </div>
     </button>
   </ion-list>
-  <ion-fab right bottom>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-fab left bottom>
     <button ion-fab color="light" (click)="newThread()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>
 </ion-content>

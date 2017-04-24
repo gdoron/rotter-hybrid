@@ -1,8 +1,9 @@
 ﻿import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { InAppBrowser } from 'ionic-native';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ThreadPage } from '../thread/thread'
+
 
 @Component({
     selector: 'page-thread-popover',
@@ -15,7 +16,9 @@ export class ThreadPopoverPage {
     title: string;
     threadPage: ThreadPage;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private socialSharing: SocialSharing) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private socialSharing: SocialSharing,
+        private inAppBrowser: InAppBrowser) {
+
         this.url = navParams.get('url');
         this.commentsCount = navParams.get('commentsCount');
         this.title = navParams.get('title');
@@ -49,7 +52,7 @@ export class ThreadPopoverPage {
 
     openInBrowser() {
         this.threadPage.popover.dismiss();
-        new InAppBrowser(this.url, '_system');
+        this.inAppBrowser.create(this.url, '_system');
     }
 
     ionViewDidLoad() {

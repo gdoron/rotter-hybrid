@@ -22,7 +22,8 @@ export class ForumPage {
     unfilterThreads: Thread[];
     loader: Loading;
     showLoading: boolean = false;
-
+    currentLoadedThreads: number = 10;
+    infiniteScroll: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, private newsService: NewsService,
         private loadingCtrl: LoadingController) {
         this.name = navParams.get('name');
@@ -36,7 +37,8 @@ export class ForumPage {
         this.showLoading = true;
 
         this.newsService.getThreads(this.name).then(threads => {
-            this.threads = this.unfilterThreads = threads;
+            this.unfilterThreads = threads;
+            this.threads = threads.slice(0, 20);
             this.showLoading = false;
             this.loader && this.loader.dismiss().catch(() => console.error('loader was not dismissed'));
         });
@@ -64,7 +66,10 @@ export class ForumPage {
     refreshForum(refresher) {
 
         this.newsService.getThreads(this.name).then(threads => {
-            this.unfilterThreads = this.threads = threads;
+            this.unfilterThreads = threads;
+            this.currentLoadedThreads = 20;
+            this.threads = threads.slice(0, this.currentLoadedThreads);
+            this.infiniteScroll.enable(true);
             refresher.complete();
         });
     }
@@ -87,5 +92,21 @@ export class ForumPage {
             forumName: this.name,
             forumAlias: this.alias
         });
+    }
+
+    doInfinite(infiniteScroll) {
+        console.log('doInfinite begin');
+        this.infiniteScroll = infiniteScroll;
+        this.currentLoadedThreads += 10;
+        if (this.currentLoadedThreads >= this.unfilterThreads.length) {
+            this.threads = this.unfilterThreads;
+            infiniteScroll.enable(false);
+        }
+        else {
+            this.threads = this.unfilterThreads.slice(0, this.currentLoadedThreads);
+        }
+        console.log('doInfinite end');
+        infiniteScroll.complete();
+
     }
 }
